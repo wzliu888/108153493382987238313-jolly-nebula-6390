@@ -1,9 +1,28 @@
 import { createFileRoute } from '@tanstack/react-router'
 import logo from '../logo.svg'
+import { useState, useEffect } from 'react'
 
 export const Route = createFileRoute('/')({
   component: App,
 })
+
+function Clock() {
+  const [time, setTime] = useState(new Date())
+
+  useEffect(() => {
+    const timer = setInterval(() => {
+      setTime(new Date())
+    }, 1000)
+
+    return () => clearInterval(timer)
+  }, [])
+
+  return (
+    <div className="text-2xl font-mono mb-4">
+      {time.toLocaleTimeString()}
+    </div>
+  )
+}
 
 function App() {
   return (
@@ -14,8 +33,9 @@ function App() {
           className="h-[40vmin] pointer-events-none animate-[spin_20s_linear_infinite]"
           alt="logo"
         />
+        <Clock />
         <p>
-          Edit <code>src/routes/index.tsx</code> and save to reload.
+          Welcome to the React + TanStack template!
         </p>
         <a
           className="text-[#61dafb] hover:underline"
