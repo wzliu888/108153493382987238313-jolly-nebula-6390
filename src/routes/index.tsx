@@ -1,4 +1,5 @@
 import { createFileRoute } from '@tanstack/react-router'
+import { useState, useEffect } from 'react'
 import logo from '../logo.svg'
 
 export const Route = createFileRoute('/')({
@@ -6,6 +7,18 @@ export const Route = createFileRoute('/')({
 })
 
 function App() {
+  const [time, setTime] = useState(new Date())
+
+  useEffect(() => {
+    const timer = setInterval(() => {
+      setTime(new Date())
+    }, 1000)
+
+    return () => clearInterval(timer)
+  }, [])
+
+  const timeString = time.toLocaleTimeString()
+
   return (
     <div className="text-center">
       <header className="min-h-screen flex flex-col items-center justify-center bg-[#282c34] text-white text-[calc(10px+2vmin)]">
@@ -15,6 +28,9 @@ function App() {
           alt="logo"
         />
         <p>
+          Current time: <span className="text-[#61dafb] font-mono">{timeString}</span>
+        </p>
+        <p className="text-sm mt-4">
           Edit <code>src/routes/index.tsx</code> and save to reload.
         </p>
         <a
